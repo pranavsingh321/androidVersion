@@ -17,13 +17,12 @@ def store_file_locally(request):
 
 def execute_ext_command(apk_path):
 
-    output = ''
     AAPT_BIN = '/usr/bin/aapt'
-
-    if os.path.exists(AAPT_BIN):
-        AAPT_COMMAND = AAPT_BIN + ' dump badging '
-    else:
-        AAPT_COMMAND = os.path.expanduser('~')+'/Library/Android/sdk/build-tools/23.0.0/aapt' + ' dump badging '
+    #MacOS
+    if not os.path.exists(AAPT_BIN):
+        AAPT_BIN = os.path.expanduser('~')+'/Library/Android/sdk/build-tools/23.0.0/aapt'
+    
+    AAPT_COMMAND = AAPT_BIN + ' dump badging '
     cmd = AAPT_COMMAND + apk_path
 
     sh = subprocess.Popen(shlex.split(cmd), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
