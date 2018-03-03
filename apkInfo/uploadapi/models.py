@@ -5,7 +5,7 @@ from django.db import models
 
 # Create your models here.
 class Application(models.Model):
-    application = models.CharField(null=True,max_length=200)
+    application = models.CharField(null=True,max_length=255)
     package_name = models.CharField(null=True,max_length=50)
     package_version_code = models.CharField(null=True,max_length=50)
     id = models.AutoField(primary_key=True)

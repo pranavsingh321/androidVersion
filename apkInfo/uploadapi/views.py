@@ -5,6 +5,7 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.parsers import FileUploadParser
 
+from django.core.files.storage import FileSystemStorage
 from uploadapi.serializers import UploadSerializer
 from uploadapi.models import Application
 from lib import utilities as ut
@@ -25,14 +26,12 @@ class CreateViewApplications(APIView):
 
         uploaded_file = request.FILES['file']
         uploaded_file_name = '{}'.format(uploaded_file.name)
-        destination_path = '/home/' + uploaded_file_name
+        fs = FileSystemStorage()
+        filename = fs.save(uploaded_file_name, uploaded_file)
+        uploaded_file_url = fs.url(filename)
 
-        destination = open(destination_path, 'wb+')
-        for chunk in uploaded_file.chunks():
-            destination.write(chunk)
-            destination.close()
         apk_info = ut.get_apk_data(destination_path)
-        serializer.save(application=self.destination_path, package_name=apk_info['package_name'], package_version_code=['package_version'])
+        serializer.save(application=self.uploaded_file_url, package_name=apk_info['package_name'], package_version_code=['package_version'])
             
 
 class DetailsViewApplication(generics.RetrieveUpdateDestroyAPIView):
