@@ -1,7 +1,9 @@
-version: "3"
+version: '3'
 services:
-  django:
-    container_name: django-app
-    build:
-      dockerfile: ./Dockerfile.django
+  webserver:
+    build: 
+          context: .
+          dockerfile: ./Dockerfile.django
     image: django:latest
+    ports:
+     - "8080:8080"
