@@ -49,7 +49,7 @@ virtualenv ENV
 source ENV/bin/activate
 python -m pip install -U pip
 pip install -r requirements.txt
-cd androidVersionApk/
+cd apkInfo/
 python manage.py migrate --run-syncdb
 gunicorn --bind 0.0.0.0:8000 boundingbox.wsgi&
 ```
