@@ -7,6 +7,7 @@ For the task we want you to create the following endpoints for the REST API:
 ```
 Description: Upload apk
 URL: POST /api/applications
+Note: file uploaded should be against key/parameter 'file'.
 ```
 
 * Endpoint 2 GET all APKs
@@ -25,6 +26,12 @@ URL: GET, PUT, DELETE /api/applications<id>
 ## Setup and start
 ```
 It's a Django project based on Python 2.7.9 and assumes that execution environment already has Python and PIP installed. 
+
+git  clone git@github.com:pranavsingh321/androidVersion.git
+cd androidVersion
+docker-compose up
+
+or
 
 git  clone git@github.com:pranavsingh321/androidVersion.git
 cd androidVersion
