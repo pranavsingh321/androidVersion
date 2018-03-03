@@ -1,0 +1,25 @@
+From ubuntu:16.04
+
+RUN apt-get update &&  apt-get -y upgrade
+
+RUN apt-get install -y python-dev python-pip &&\
+    python -m pip install -U pip
+
+RUN apt-get install -y curl git
+
+RUN git  clone https://github.com/pranavsingh321/androidVersion.git
+
+
+RUN cd /androidVersion && \
+    pip install -r requirements.txt
+
+RUN cd /androidVersion/apkInfo && \
+    python manage.py migrate --run-syncdb
+
+EXPOSE  8080
+
+WORKDIR /androidVersion/apkInfo
+    
+ENTRYPOINT gunicorn --bind 0.0.0.0:8080 apkInfo.wsgi && /bin/bash
+
+
