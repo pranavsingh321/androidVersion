@@ -1,7 +1,6 @@
-
+###File upload using Django rest framework:
 
 ## Endpoints
-For the task we want you to create the following endpoints for the REST API:
 
 * Endpoint 1 - POST apk
 ```
