@@ -3,39 +3,23 @@
 ## Endpoints
 For the task we want you to create the following endpoints for the REST API:
 
-* Endpoint 1 - POST scan
+* Endpoint 1 - POST apk
 ```
-Description: Create a new scan
-URL: POST /scans
-Request data: json data representing a scan (see above), i.e. {“points”: [<points>]}
-Return: {“id”: <id>, “points”: [<points>]} where the id is created by the backend can be used later when asking for scans
+Description: Upload apk
+URL: POST /api/applications
 ```
 
-* Endpoint 2 GET scan
+* Endpoint 2 GET all APKs
 ```
-Description: Get the points of a specific scan
-URL: GET /scans/<id>
-Return: {“id”: <id>, “points”: [<points>]}
-```
-
-* Endpoint 3 PUT scan
-```
-Description: Create or update a scan with a specific ID
-URL: PUT /scans/<id>
-Request data: A scan object {“id”: <id>, “points”: [<points>]}
-Return: {“id”: <id>, “points”: [<points>]}
+Description: Get all uploaded APKs
+URL: GET /api/applications
 ```
 
-* Endpoint 4 - GET bounding box
+* Endpoint 3 APK details
 ```
-Description: Get the bounding box of a scan (specified by the id from Endpoint 1) 
-URL: GET /scans/<id>/boundingbox
-Return: {“boundingBox”: [<x_l>, <y_l>, <z_l> ] , “center”: [<x>, <y>, <z>]}
+Description: Get apk details
+URL: GET, PUT, DELETE /api/applications<id>
 ```
-
-## General notes 
-- When implementing the task, there’s no need to use a database to store the scans, an in memory data structure is just fine
-
 
 
 ## Setup and start
@@ -51,20 +35,12 @@ python -m pip install -U pip
 pip install -r requirements.txt
 cd apkInfo/
 python manage.py migrate --run-syncdb
-gunicorn --bind 0.0.0.0:8000 boundingbox.wsgi&
+gunicorn --bind 0.0.0.0:8000 apkInfo.wsgi&
 ```
 ## Test
 ```
 Preferably use any Rest Client like Postman(Chrome), RestClient(Mozilla) to open http://127.0.0.1:8000/scans.
 
-or
-
-open the browser at url - http://127.0.0.1:8000/scans
-
-For sample tests using curl-
-
-cd software-challenge-pranav
-./test.sh
 ```
 
 
