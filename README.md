@@ -39,7 +39,7 @@ gunicorn --bind 0.0.0.0:8000 apkInfo.wsgi&
 ```
 ## Test
 ```
-Preferably use any Rest Client like Postman(Chrome), RestClient(Mozilla) to open http://127.0.0.1:8000/scans.
+Preferably use any Rest Client like Postman(Chrome), RestClient(Mozilla) to open http://127.0.0.1:8000/api/applications.
 
 ```
 
