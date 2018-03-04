@@ -33,6 +33,7 @@ RUN cd /androidVersion && \
     pip install -r requirements.txt
 
 RUN cd /androidVersion/apkInfo && \
+    python manage.py makemigrations && \
     python manage.py migrate --run-syncdb
 
 EXPOSE  8080
