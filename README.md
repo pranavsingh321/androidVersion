@@ -40,6 +40,7 @@ source ENV/bin/activate
 python -m pip install -U pip
 pip install -r requirements.txt
 cd apkInfo/
+python manage.py makemigrations
 python manage.py migrate --run-syncdb
 gunicorn --bind 0.0.0.0:8080 apkInfo.wsgi&
 ```
