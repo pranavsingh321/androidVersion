@@ -5,6 +5,7 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework.exceptions import ParseError, ValidationError 
 from rest_framework.parsers import MultiPartParser, FormParser
 from uploadapi.serializers import UploadSerializer
 from uploadapi.models import Application
@@ -30,8 +31,10 @@ class CreateViewApplications(generics.ListCreateAPIView):
                 serializer.save(application=uploaded_file_url,
                                 package_name=apk_info['name'], package_version_code=apk_info['versionCode'])
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
-            
-        return Response({}, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                raise ValidationError({},status=status.HTTP_404_NOT_FOUND)
+        else:
+            raise ParseError({'File content not found'},status=status.HTTP_404_NOT_FOUND)
 
 
 class DetailsViewApplication(generics.RetrieveUpdateDestroyAPIView):
