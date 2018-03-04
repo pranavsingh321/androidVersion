@@ -34,7 +34,7 @@ class CreateViewApplications(generics.ListCreateAPIView):
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'Missing':'File not found'}, status=status.HTTP_400_BAD_REQUEST)
+            raise ParseError('File content not found')
 
 
 class DetailsViewApplication(generics.RetrieveUpdateDestroyAPIView):
