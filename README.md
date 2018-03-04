@@ -47,7 +47,13 @@ gunicorn --bind 0.0.0.0:8080 apkInfo.wsgi&
 ## Test
 ```
 Preferably use any Rest Client like Postman(Chrome), RestClient(Mozilla) to open http://127.0.0.1:8000/api/applications.
-
+or
+curl -X POST \
+  http://127.0.0.1:8000/api/applications \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW' \
+  -H 'postman-token: e9f7cc0c-b7d7-4075-6833-407e1e75dc09' \
+  -F file=@WhatsApp.apk
 ```
 
 
