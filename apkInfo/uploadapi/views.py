@@ -22,16 +22,16 @@ class CreateViewApplications(generics.ListCreateAPIView):
 
     def perform_create(self, serializer, format=None):
         '''Handle upload of apk files'''
+        if self.request.FILES:
+            uploaded_file_url, local_path = ut.store_file_locally(self.request)
+            apk_info = ut.get_apk_data(ut.execute_ext_command(local_path))
 
-        uploaded_file_url, local_path = ut.store_file_locally(self.request)
-        apk_info = ut.get_apk_data(ut.execute_ext_command(local_path))
-
-        if serializer.is_valid():
-            serializer.save(application=uploaded_file_url,
-                            package_name=apk_info['name'], package_version_code=apk_info['versionCode'])
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if serializer.is_valid():
+                serializer.save(application=uploaded_file_url,
+                                package_name=apk_info['name'], package_version_code=apk_info['versionCode'])
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+            
+        return Response({}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class DetailsViewApplication(generics.RetrieveUpdateDestroyAPIView):
