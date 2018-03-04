@@ -32,9 +32,9 @@ class CreateViewApplications(generics.ListCreateAPIView):
                                 package_name=apk_info['name'], package_version_code=apk_info['versionCode'])
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
             else:
-                raise ValidationError({},status=status.HTTP_404_NOT_FOUND)
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
-            raise ParseError({'File content not found'},status=status.HTTP_404_NOT_FOUND)
+            raise Response(({'Missing':'File not found'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class DetailsViewApplication(generics.RetrieveUpdateDestroyAPIView):
