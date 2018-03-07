@@ -35,4 +35,6 @@ class ViewAllApplications(TestCase):
         f.write('test123\n')
         f.close()
         f = open(path, 'rb')
-        return {'datafile': f}    
+        return {'datafile': f}
+    def _download_test_application(self, url):
+    	
