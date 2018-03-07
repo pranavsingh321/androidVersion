@@ -26,5 +26,13 @@ class ViewAllApplications(TestCase):
 	"""view  for all ViewAllApplications"""
     def setUp():
     	self.client = APIClient()
-    	self.
-		
+    	self._create_test_file('/tmp/test_upload.apk')
+    	tmp_file = tempfile.NamedTemporaryFile(suffix='.apk')
+	    response = self.client.post('my_url', {'image': tmp_file}, format='multipart')
+
+	def _create_test_file(self, path):
+        f = open(path, 'w')
+        f.write('test123\n')
+        f.close()
+        f = open(path, 'rb')
+        return {'datafile': f}    
