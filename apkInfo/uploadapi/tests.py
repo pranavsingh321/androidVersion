@@ -27,11 +27,10 @@ class ApplicationTestcase(TestCase):
         self.assertEqual(prev_count+1, new_count)
 
 
-class ViewAllApplications(TestCase):
+class UploadApplication(TestCase):
     """view  for all ViewAllApplications"""
     def setUp(self):
         self.client = APIClient()
-
         self.whattsap_apk_url='https://www.cdn.whatsapp.net/android/2.18.72/WhatsApp.apk'
 
     def test_upload_application(self):
