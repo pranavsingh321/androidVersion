@@ -33,7 +33,7 @@ class ViewAllApplications(TestCase):
         file_path=self._download_save_test_application(whattsap_apk_url)
 
     def test_upload_application(self):
-        post_url = reverse('api/applications')
+        post_url = reverse('uploadapi:api/applications')
         data = self._download_save_test_application(self.whattsap_apk_url)
         response = client.post(post_url, data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
