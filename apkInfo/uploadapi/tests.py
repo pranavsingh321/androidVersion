@@ -24,6 +24,7 @@ class ApplicationTestcase(TestCase):
         new_count = Application.objects.count()
         self.assertEqual(prev_count+1, new_count)
 
+'''
 class ViewAllApplications(TestCase):
     """view  for all ViewAllApplications"""
     def setUp(self):
@@ -43,3 +44,4 @@ class ViewAllApplications(TestCase):
         file_name = url[url.rfind("/")+1:]
         ro = rq.get(url, stream=True)        
         return {'file': ro}
+'''
