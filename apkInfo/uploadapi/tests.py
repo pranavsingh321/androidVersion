@@ -5,6 +5,7 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 from django.core.urlresolvers import reverse
 import requests as rq
+from rest_framework import status
 
 from .models import Application
 
@@ -24,19 +25,18 @@ class ApplicationTestcase(TestCase):
         new_count = Application.objects.count()
         self.assertEqual(prev_count+1, new_count)
 
-'''
+
 class ViewAllApplications(TestCase):
     """view  for all ViewAllApplications"""
     def setUp(self):
         self.client = APIClient()
 
-        whattsap_apk_url='https://www.cdn.whatsapp.net/android/2.18.72/WhatsApp.apk'
-        file_path=self._download_save_test_application(whattsap_apk_url)
+        self.whattsap_apk_url='https://www.cdn.whatsapp.net/android/2.18.72/WhatsApp.apk'
 
     def test_upload_application(self):
-        post_url = reverse('uploadapi:api/applications')
+        post_url = reverse('application_list')
         data = self._download_save_test_application(self.whattsap_apk_url)
-        response = client.post(post_url, data, format='multipart')
+        response = self.client.post(post_url, data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertIn('created', response.data)
 
@@ -44,4 +44,4 @@ class ViewAllApplications(TestCase):
         file_name = url[url.rfind("/")+1:]
         ro = rq.get(url, stream=True)        
         return {'file': ro}
-'''
+
