@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import os
 from django.test import TestCase
 from rest_framework.test import APIClient
-from django.core.urlresolvers import reverse
+from rest_framework.reverse import reverse
 import requests as rq
 from rest_framework import status
 
@@ -35,13 +36,19 @@ class ViewAllApplications(TestCase):
 
     def test_upload_application(self):
         post_url = reverse('application_list')
-        data = self._download_save_test_application(self.whattsap_apk_url)
-        response = self.client.post(post_url, data, format='multipart')
+        file_path = self._download_save_test_application(self.whattsap_apk_url)
+        data = open(file_path, 'rb')
+        response = self.client.post(post_url, {'file': data}, format='multipart')
+        os.remove(file_path)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertIn('created', response.data)
 
     def _download_save_test_application(self, url):
         file_name = url[url.rfind("/")+1:]
-        ro = rq.get(url, stream=True)        
-        return {'file': ro}
+        file_path = '/tmp/'+file_name
+        r = rq.get(url, stream=True)
+        with open(file_path, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024):
+                if chunk:
+                   f.write(chunk)
+        return file_path
 
