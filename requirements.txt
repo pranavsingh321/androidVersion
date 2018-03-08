@@ -2,4 +2,4 @@ Django==1.11
 gunicorn==19.7.1
 djangorestframework==3.7.7
 pytz==2018.3
-request==0.0.26
+requests==2.18.4
