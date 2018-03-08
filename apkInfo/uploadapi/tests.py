@@ -3,6 +3,9 @@ from __future__ import unicode_literals
 
 from django.test import TestCase
 from rest_framework.test import APIClient
+#from rest_framework.reverse import reverse
+from django.urls import reverse
+import requests as rq
 
 from .models import Application
 
@@ -14,7 +17,7 @@ class ApplicationTestcase(TestCase):
         self.package_name = 'android'
         self.package_version_code = '4201'
         self.application_object = Application(application=self.application,
-        	package_name=self.package_name, package_version_code=self.package_version_code)  
+                                  package_name=self.package_name, package_version_code=self.package_version_code)  
     
     def test_model_create_application(self):
         prev_count = Application.objects.count()
@@ -23,18 +26,21 @@ class ApplicationTestcase(TestCase):
         self.assertEqual(prev_count+1, new_count)
 
 class ViewAllApplications(TestCase):
-	"""view  for all ViewAllApplications"""
-    def setUp():
-    	self.client = APIClient()
-    	self._create_test_file('/tmp/test_upload.apk')
-    	tmp_file = tempfile.NamedTemporaryFile(suffix='.apk')
-	    response = self.client.post('my_url', {'image': tmp_file}, format='multipart')
+    """view  for all ViewAllApplications"""
+    def setUp(self):
+        self.client = APIClient()
 
-	def _create_test_file(self, path):
-        f = open(path, 'w')
-        f.write('test123\n')
-        f.close()
-        f = open(path, 'rb')
-        return {'datafile': f}
-    def _download_test_application(self, url):
-    	
+        whattsap_apk_url='https://www.cdn.whatsapp.net/android/2.18.72/WhatsApp.apk'
+        file_path=self._download_save_test_application(whattsap_apk_url)
+
+    def test_upload_application(self):
+        post_url = reverse('uploadapi:api/applications')
+        data = self._download_save_test_application(self.whattsap_apk_url)
+        response = client.post(post_url, data, format='multipart')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertIn('created', response.data)
+
+    def _download_save_test_application(self, url):
+        file_name = url[url.rfind("/")+1:]
+        ro = rq.get(url, stream=True)        
+        return {'file': ro}
